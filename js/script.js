@@ -1,4 +1,4 @@
-const unorderedList = document.querySelector(".guessed-letters");
+const guessedLettersElement = document.querySelector(".guessed-letters");
 const btnGuessIt = document.querySelector(".guess");
 const textInput = document.querySelector(".letter");
 const wordInProgress = document.querySelector(".word-in-progress");
@@ -6,48 +6,68 @@ const remainingGuess = document.querySelector(".remaining");
 const span = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const btnPlayAgain = document.querySelector(".play-again hide");
+const guessedLetters = [];
 
 
 const updateParagraph = function(word){
     for(var letter of word)
-      lengthArray = word.length;
-    var wordArray = [];
-    //wordInProgress="";
-    for (i=0; i < lengthArray; i++){
-     wordArray.push("●");
-     newArray = wordArray.join("");
-     wordInProgress.innerText = newArray;
+        lengthArray = word.length;
+        var wordArray = [];
+        //wordInProgress="";
+        for (i=0; i < lengthArray; i++){
+        wordArray.push("●");
+        newArray = wordArray.join("");
+        wordInProgress.innerText = newArray;
     }
 }
 
 updateParagraph("magnolia");
 
+//Clicks on Guess it button.
 btnGuessIt.addEventListener("click", function(e){
     e.preventDefault();
+    message.innerText = "";
     textValue = textInput.value;
-    playerInput(textInput);
-    //textValue.value = "";
+    const validateInput = playerInput(textValue);
+    if (validateInput){
+    console.log(validateInput);
+    }
+   
 })
 
-const playerInput = function(textInput){
+//Checks accepted letters
+const playerInput = function(textValue){
     const acceptedLetter = /[a-zA-Z]/;
-    const inputFromPlayer = textInput.value;
-    if (inputFromPlayer === ""){
+    if (textValue === ""){
         console.log("Input cannot be blank. Please type a letter");
         message.innerText ="Input cannot be blank. Please type a letter";
     }
-    else if (inputFromPlayer.length > 1){
+    else if (textValue.length > 1){
         console.log("You cannot type more than 1 letter");
         message.innerText = "You cannot type more than 1 letter"
     }
-    else if (inputFromPlayer.match(acceptedLetter)){
-        message.innerText = `You guessed the letter ${inputFromPlayer}`;
+    else if (!textValue.match(acceptedLetter)){
+         message.innerText = "You can only enter a letter"
+        
     }
     else{
-        console.log("You can only enter a letter");
-         message.innerText = "You can only enter a letter"
+         message.innerText = `You guessed the letter ${textValue}`;
+         return textValue ;
 
     }
 
 }
 
+//Guessed words go to an array.
+const makeGuess = function(playerInput){
+    playerInput.toUpperCase;
+    if (guessedLetters.includes(playerInput)){
+         console.log("You already guessed this letter");
+    }
+    else 
+    {
+        guessedLetters.push(playerInput);
+        console.log("letter added to guessedLetter array");
+    }
+
+}
