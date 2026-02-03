@@ -30,8 +30,10 @@ btnGuessIt.addEventListener("click", function(e){
     textValue = textInput.value;
     const validateInput = playerInput(textValue);
     if (validateInput){
-    console.log(validateInput);
+         makeGuess(validateInput);
+         console.log(validateInput);
     }
+    textInput.value = "";
    
 })
 
@@ -56,14 +58,15 @@ const playerInput = function(textValue){
 }
 
 //Guessed words go to an array.
-const makeGuess = function(playerInput){
-    playerInput.toUpperCase;
-    if (guessedLetters.includes(playerInput)){
+const makeGuess = function(validateInput){
+   const playerInputValue = validateInput.toUpperCase();
+    if (guessedLetters.includes(playerInputValue)){
          console.log("You already guessed this letter");
+         message.innerText = "You already guessed this letter";
     }
     else 
     {
-        guessedLetters.push(playerInput);
+        guessedLetters.push(playerInputValue);
         console.log("letter added to guessedLetter array");
     }
 
