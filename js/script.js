@@ -35,15 +35,13 @@ btnGuessIt.addEventListener("click", function(e){
    
 })
 
-//Checks accepted letters
+//Validates accepted letters
 const playerInput = function(textValue){
     const acceptedLetter = /[a-zA-Z]/;
     if (textValue === ""){
-        console.log("Input cannot be blank. Please type a letter");
         message.innerText ="Input cannot be blank. Please type a letter";
     }
     else if (textValue.length > 1){
-        console.log("You cannot type more than 1 letter");
         message.innerText = "You cannot type more than 1 letter"
     }
     else if (!textValue.match(acceptedLetter)){
@@ -55,7 +53,6 @@ const playerInput = function(textValue){
          return textValue ;
 
     }
-
 }
 
 //Guessed words go to an array.
