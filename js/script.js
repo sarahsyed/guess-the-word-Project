@@ -6,6 +6,7 @@ const remainingGuess = document.querySelector(".remaining");
 const span = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const btnPlayAgain = document.querySelector(".play-again hide");
+const word = "magnolia"
 const guessedLetters = [];
 
 
@@ -21,7 +22,7 @@ const updateParagraph = function(word){
     }
 }
 
-updateParagraph("magnolia");
+updateParagraph(word);
 
 //Clicks on Guess it button.
 btnGuessIt.addEventListener("click", function(e){
@@ -31,10 +32,9 @@ btnGuessIt.addEventListener("click", function(e){
     const validateInput = playerInput(textValue);
     if (validateInput){
          makeGuess(validateInput);
-         console.log(validateInput);
+         e.preventDefault();
+         textInput.value = "";
     }
-    textInput.value = "";
-   
 })
 
 //Validates accepted letters
@@ -51,7 +51,7 @@ const playerInput = function(textValue){
         
     }
     else{
-         message.innerText = `You guessed the letter ${textValue}`;
+        // message.innerText = `You guessed the letter ${textValue}`;
          return textValue ;
 
     }
@@ -61,13 +61,38 @@ const playerInput = function(textValue){
 const makeGuess = function(validateInput){
    const playerInputValue = validateInput.toUpperCase();
     if (guessedLetters.includes(playerInputValue)){
-         console.log("You already guessed this letter");
          message.innerText = "You already guessed this letter";
     }
     else 
     {
         guessedLetters.push(playerInputValue);
-        console.log("letter added to guessedLetter array");
+        showGuessedLetters();
+        updateWordInProgress(guessedLetters);
+
+    }
+}    
+
+//Display Guessed Letters
+const showGuessedLetters = function(){
+    guessedLettersElement.innerHTML = "";
+    for (letter of guessedLetters){
+    var li = document.createElement("li");
+    li.textContent = letter;
+    guessedLettersElement.append(li);
+    }
+}
+
+const updateWordInProgress = function(guessedLetters){
+    var wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    console.log(wordArray);
+    if (wordArray.includes(guessedLetters)){
+            //Update the circle symbol with correct letter
     }
 
-}
+    }
+
+
+
+
+   
