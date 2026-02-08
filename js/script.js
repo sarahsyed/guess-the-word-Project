@@ -11,11 +11,8 @@ const guessedLetters = [];
 
 
 const updateParagraph = function(word){
-    for(var letter of word)
-        lengthArray = word.length;
+    for (var letter of word){
         var wordArray = [];
-        //wordInProgress="";
-        for (i=0; i < lengthArray; i++){
         wordArray.push("●");
         newArray = wordArray.join("");
         wordInProgress.innerText = newArray;
@@ -63,8 +60,7 @@ const makeGuess = function(validateInput){
     if (guessedLetters.includes(playerInputValue)){
          message.innerText = "You already guessed this letter";
     }
-    else 
-    {
+    else {
         guessedLetters.push(playerInputValue);
         showGuessedLetters();
         updateWordInProgress(guessedLetters);
@@ -76,23 +72,28 @@ const makeGuess = function(validateInput){
 const showGuessedLetters = function(){
     guessedLettersElement.innerHTML = "";
     for (letter of guessedLetters){
-    var li = document.createElement("li");
-    li.textContent = letter;
-    guessedLettersElement.append(li);
+        var li = document.createElement("li");
+        li.textContent = letter;
+        guessedLettersElement.append(li);
     }
 }
+
 
 const updateWordInProgress = function(guessedLetters){
     var wordUpper = word.toUpperCase();
     const wordArray = wordUpper.split("");
-    console.log(wordArray);
-    if (wordArray.includes(guessedLetters)){
-            //Update the circle symbol with correct letter
+    updatedWordArray = [];
+    
+    //Update the circle symbol with correct letter
+    for (const letter of wordArray){
+       if (guessedLetters.includes(letter)){
+           updatedWordArray.push(letter);
+          // console.log("updateWordArray "+ updatedWordArray);
+        }
+       else {
+            updatedWordArray.push("●");
+        }
+        wordInProgress.innerText = updatedWordArray.join("");
     }
 
-    }
-
-
-
-
-   
+}
