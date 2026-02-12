@@ -9,9 +9,16 @@ const btnPlayAgain = document.querySelector(".play-again hide");
 const word = "magnolia"
 const guessedLetters = [];
 var remainingGuesses = 8;
+const getWord = async function(){
+    const res = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+    const words = await res.text();
+    const wordArray = words.split("\n");
+    console.log(wordArray);
+}  
+getWord();
 
 
-const updateParagraph = function(word){
+        const updateParagraph = function(word){
     for (var letter of word){
         var wordArray = [];
         wordArray.push("●");
@@ -26,7 +33,7 @@ updateParagraph(word);
 btnGuessIt.addEventListener("click", function(e){
     e.preventDefault();
     message.innerText = "";
-    textValue = textInput.value;
+    textValue = textInput.value.trim();
     const validateInput = playerInput(textValue);
     if (validateInput){
          makeGuess(validateInput);
@@ -66,8 +73,6 @@ const makeGuess = function(validateInput){
         showGuessedLetters();
         guessRemaining(playerInputValue)
         updateWordInProgress(guessedLetters);
-
-
     }
 }    
 
@@ -102,20 +107,21 @@ const updateWordInProgress = function(guessedLetters){
 
 }
 
-const guessRemaining = function(guessedLetters){
+const guessRemaining = function(playerInputValue){
         secretWord = word.toUpperCase();
-        console.log(secretWord + " " + guessedLetters + " results");
-       if(!secretWord.includes(guessedLetters))
+        console.log(secretWord + " " + playerInputValue + " results");
+       if(!secretWord.includes(playerInputValue)){
         message.innerHTML = "Sorry the word does not contain the letter you typed"
         remainingGuesses = remainingGuesses - 1;
         span.innerText = remainingGuesses  + ` guesses`;
-        if (remainingGuess === 0){
-            span.innerHTML = "Game Over";
+        if (remainingGuesses === 0){
+            message.innerHTML = "Game Over";
         }
-    
-    // {
-   //     message.innerHTML  = "Great! Your guessed letter is in the word";
-   // }
+    }
+    else
+    {
+        message.innerHTML  = "Great! Your guessed letter is in the word";
+    }
     
 }   
 
