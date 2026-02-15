@@ -5,8 +5,8 @@ const wordInProgress = document.querySelector(".word-in-progress");
 const remainingGuess = document.querySelector(".remaining");
 const span = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
-const btnPlayAgain = document.querySelector(".play-again hide");
-const guessedLetters = [];
+const btnPlayAgain = document.querySelector(".play-again");
+let guessedLetters = [];
 var remainingGuesses = 8;
 let word;
 //Picking a random word.
@@ -26,7 +26,6 @@ const getWord = async function(){
 }
 getWord();
 
-
  const updateParagraph = function(word){
     for (var letter of word){
         var wordArray = [];
@@ -35,7 +34,6 @@ getWord();
         wordInProgress.innerText = newArray;
     }
 }
-
 
 //Clicks on Guess it button.
 btnGuessIt.addEventListener("click", function(e){
@@ -127,6 +125,7 @@ const guessRemaining = function(playerInputValue){
     }
         if (remainingGuesses === 0){
             message.innerHTML = `Game Over. The word was <span>${word}</span>`;
+            startOver();
         }
         else if (remainingGuesses === 1){
            span.innerText = remainingGuesses  + ` guesses`;
@@ -144,3 +143,26 @@ const playerResult = function(){
     }
 }
 
+const startOver = function(){
+    btnGuessIt.classList.add("hide");
+    span.classList.add("hide");
+    wordInProgress.classList.add("hide");
+    remainingGuess.classList.add("hide");
+    btnPlayAgain.classList.remove("hide");
+ }
+
+btnPlayAgain.addEventListener("click", function(){
+        message.classList.remove(".win");
+        message.innerText = "";
+        guessedLettersElement.innerText = "";
+        guessedLetters = [];
+        remainingGuesses = 8;
+        getWord();
+        span.classList.remove("hide");
+        span.innerText = span.innerText = remainingGuesses  + ` guesses`;
+        btnGuessIt.classList.remove("hide");
+        btnPlayAgain.classList.add("hide");
+        textInput.classList.remove("hide");
+        wordInProgress.classList.remove("hide");
+        remainingGuess.classList.remove("hide");
+    })
