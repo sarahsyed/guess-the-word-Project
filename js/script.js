@@ -21,8 +21,6 @@ const getWord = async function(){
     let wordIndex = selectRandomWord(wordArray);
     word = wordArray[wordIndex].trim();
     updateParagraph(word);
-    console.log(word);
-
 }
 getWord();
 
@@ -69,7 +67,6 @@ const playerInput = function(textValue){
 //Guessed words go to an array.
 const makeGuess = function(validateInput){
    const playerInputValue = validateInput.toUpperCase();
-   console.log(guessedLetters + " guessed letters " + playerInputValue + " playerInputValue");
     if (guessedLetters.includes(playerInputValue)){
          message.innerText = "You already guessed this letter";
     }
@@ -100,7 +97,6 @@ const updateWordInProgress = function(guessedLetters){
     for (const letter of wordArray){
        if (guessedLetters.includes(letter)){
            updatedWordArray.push(letter);
-          // console.log("updateWordArray "+ updatedWordArray);
         }
        else {
             updatedWordArray.push("●");
@@ -113,11 +109,9 @@ const updateWordInProgress = function(guessedLetters){
 
 const guessRemaining = function(playerInputValue){
         secretWord = word.toUpperCase();
-        console.log(secretWord + " " + playerInputValue + " results");
     if (!secretWord.includes(playerInputValue)){
         message.innerHTML = "Sorry the word does not contain the letter you typed"
         remainingGuesses -= 1;
-       // console.log(remainingGuesses);
     }
     else
     {
